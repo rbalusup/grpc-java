@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package calculate;
+
+option java_package = "com.proto.calculate";
+option java_multiple_files = true;
+
+message SumRequest {
+    int32 number1 = 1;
+    int32 number2 = 2;
+}
+
+message SumResponse {
+    int32 sumNumber = 1;
+}
+
+message PrimeNumberDecomposeRequest {
+    int64 randomNumber = 1;
+}
+
+message PrimeNumberDecomposeResponse {
+    int64 decomposedNumber = 1;
+}
+
+message ComputeAverageRequest {
+    int32 computeNumber = 1;
+}
+
+message ComputeAverageResponse {
+    double computeAverage = 1;
+}
+
+message FindMaximumRequest {
+    int32 inputNumber = 1;
+}
+
+message FindMaximumResponse {
+    int32 maximum = 1;
+}
+
+message SquareRootRequest {
+    int32 rootNumber = 1;
+}
+
+message SquareRootResponse {
+    double sqrtNumber = 1;
+}
+
+service CalculatorService {
+    //unary
+    rpc Sum(SumRequest) returns (SumResponse) {};
+
+    // server streaming
+    rpc PrimeNumberDecompose(PrimeNumberDecomposeRequest) returns (stream PrimeNumberDecomposeResponse) {};
+
+    // client streaming
+    rpc ComputeAverage(stream ComputeAverageRequest) returns (ComputeAverageResponse) {};
+
+    // BiDi Streaming
+    rpc FindMaximum(stream FindMaximumRequest) returns (stream FindMaximumResponse) {};
+
+    // Error Handling - unary
+    // this RPC will send exception when the request number is negative
+    rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse) {};
+}
